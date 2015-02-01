@@ -30,7 +30,7 @@ echo "GEOS installed"
 
 # Install GDAL
 echo "Fetching and installing GDAL ($GDAL_VERSION)"
-curl -O https://wapu-lib.s3.amazonaws.com/gdal-$GDAL_VERSION-heroku.tar.gz
+curl -O -s https://wapu-lib.s3.amazonaws.com/gdal-$GDAL_VERSION-heroku.tar.gz
 echo "Installing ..."
 tar xzf gdal-$GDAL_VERSION-heroku.tar.gz
 mv gdal $VENDOR_DIR/gdal-$GDAL_VERSION
@@ -40,7 +40,7 @@ echo "GDAL installed"
 
 # Install wkhtmltopdf
 echo "Fetching and installing wkhtmltopdf ($WKHTMLTOPDF_VERSION)"
-curl -O https://wapu-lib.s3.amazonaws.com/wkhtmltopdf-$WKHTMLTOPDF_VERSION-static-amd64.tar.gz
+curl -O -s https://wapu-lib.s3.amazonaws.com/wkhtmltopdf-$WKHTMLTOPDF_VERSION-static-amd64.tar.gz
 echo "Installing ..."
 tar xzf wkhtmltopdf-$WKHTMLTOPDF_VERSION-static-amd64.tar.gz
 mkdir -p $VENDOR_DIR/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin
@@ -48,5 +48,16 @@ mv wkhtmltopdf-amd64 $VENDOR_DIR/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin/wkhtmltopd
 echo "Cleaning up ..."
 rm wkhtmltopdf-$WKHTMLTOPDF_VERSION-static-amd64.tar.gz
 echo "Wkhtmltopdf installed"
+
+echo "-----------> Configuring environment"
+
+export PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/bin:$BUILD_DIR/vendor/geos-$GEOS_VERSION/bin:$BUILD_DIR/vendor/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin:$PATH"
+export CPPPATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/include:$BUILD_DIR/vendor/geos-$GEOS_VERSION/include:$CPPPATH"
+export CPATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/include:$BUILD_DIR/vendor/geos-$GEOS_VERSION/include:$CPATH"
+export LIBRARY_PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LIBRARY_PATH"
+export LD_LIBRARY_PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH"
+export GDAL_DATA="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/share/gdal"
+
+echo $PATH
 
 exit 0
