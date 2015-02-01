@@ -62,5 +62,3 @@ cp -R $CACHE_DIR/gdal-$GDAL_VERSION vendor
 echo "Copying wkhtmltopdf into place ..."
 cp -R $CACHE_DIR/wkhtmltopdf-$WKHTMLTOPDF_VERSION vendor
 echo "All done with binaries"
-
-exit 0
