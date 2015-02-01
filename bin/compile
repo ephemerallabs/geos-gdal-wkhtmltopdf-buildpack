@@ -4,6 +4,7 @@ set -e
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+APP_DIR='/app'
 
 CACHED_DIRS=".heroku"
 
@@ -60,14 +61,14 @@ cp -R $CACHE_DIR/wkhtmltopdf-$WKHTMLTOPDF_VERSION vendor
 
 echo "-----------> Configuring environment"
 
-BIN_PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/bin:$BUILD_DIR/vendor/geos-$GEOS_VERSION/bin:$BUILD_DIR/vendor/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin:$PATH"
+BIN_PATH="$APP_DIR/vendor/gdal-$GDAL_VERSION/bin:$APP_DIR/vendor/geos-$GEOS_VERSION/bin:$APP_DIR/vendor/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin:$PATH"
 # Add GEOS and GDAL to paths AND wkhtmltopdf
 export PATH=$BIN_PATH
-export LIBRARY_PATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH
-export CPPPATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/include:$BUILD_DIR/vendor/geos-$GEOS_VERSION/include:$CPPPATH
-export CPATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/include:$BUILD_DIR/vendor/geos-$GEOS_VERSION/include:$CPATH
-export GDAL_DATA=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/share/gdal
+export LIBRARY_PATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/lib:$APP_DIR/vendor/geos-$GEOS_VERSION/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/lib:$APP_DIR/vendor/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH
+export CPPPATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/include:$APP_DIR/vendor/geos-$GEOS_VERSION/include:$CPPPATH
+export CPATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/include:$APP_DIR/vendor/geos-$GEOS_VERSION/include:$CPATH
+export GDAL_DATA=$APP_DIR/vendor/gdal-$GDAL_VERSION/share/gdal
 
 echo $PATH
 
