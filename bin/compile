@@ -4,12 +4,15 @@ set -e
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+ENV_DIR=$3
 
 CACHED_DIRS=".heroku"
 
 GDAL_VERSION="1.11.1"
 GEOS_VERSION="3.4.2"
 WKHTMLTOPDF_VERSION="0.9.9"
+
+mkdir -p $CACHE_DIR
 
 # Install GEOS
 if [ ! -d $CACHE_DIR/geos-$GEOS_VERSION ]; then
@@ -56,8 +59,10 @@ export PATH=$BIN_PATH
 export LIBRARY_PATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LIBRARY_PATH
 export LD_LIBRARY_PATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH
 
-set-env PATH $BIN_PATH
-set-env LIBRARY_PATH /app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib
-set-env LD_LIBRARY_PATH /app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib
+PROFILE_PATH="$BUILD_DIR/.profile.d/python.sh"
+
+echo "export PATH=$BIN_PATH" >> $PROFILE_PATH
+echo "export LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib" >> $PROFILE_PATH
+echo "export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib" >> $PROFILE_PATH
 
 exit 0
