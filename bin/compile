@@ -59,17 +59,4 @@ cp -R $CACHE_DIR/geos-$GEOS_VERSION vendor
 cp -R $CACHE_DIR/gdal-$GDAL_VERSION vendor
 cp -R $CACHE_DIR/wkhtmltopdf-$WKHTMLTOPDF_VERSION vendor
 
-echo "-----------> Configuring environment"
-
-BIN_PATH="$APP_DIR/vendor/gdal-$GDAL_VERSION/bin:$APP_DIR/vendor/geos-$GEOS_VERSION/bin:$APP_DIR/vendor/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin:$PATH"
-# Add GEOS and GDAL to paths AND wkhtmltopdf
-export PATH=$BIN_PATH
-export LIBRARY_PATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/lib:$APP_DIR/vendor/geos-$GEOS_VERSION/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/lib:$APP_DIR/vendor/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH
-export CPPPATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/include:$APP_DIR/vendor/geos-$GEOS_VERSION/include:$CPPPATH
-export CPATH=$APP_DIR/vendor/gdal-$GDAL_VERSION/include:$APP_DIR/vendor/geos-$GEOS_VERSION/include:$CPATH
-export GDAL_DATA=$APP_DIR/vendor/gdal-$GDAL_VERSION/share/gdal
-
-echo $PATH
-
 exit 0

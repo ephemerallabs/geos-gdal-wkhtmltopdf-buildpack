@@ -1,2 +1,14 @@
-#!/usr/bin/env bash
-echo "--- {}"
+#!/bin/sh
+
+echo "-----------> Configuring environment"
+
+cat << EOF
+---
+config_vars:
+PATH: "/app/.heroku/python/bin:/app/.heroku/venv/bin:/bin:/usr/local/bin:/usr/bin:/app/vendor/gdal-1.11.1/bin:/app/vendor/geos-3.4.2/bin:/app/vendor/wkhtmltopdf-0.9.9/bin"
+LIBRARY_PATH: "/app/.heroku/vendor/lib:/app/.heroku/python/lib:/app/vendor/gdal-1.11.1/lib:/app/vendor/geos-3.4.2/lib"
+LD_LIBRARY_PATH: "/app/.heroku/vendor/lib:/app/.heroku/python/lib:/app/.heroku/vendor/lib:/app/vendor/gdal-1.11.1/lib:/app/vendor/geos-3.4.2/lib"
+CPPPATH: "/app/vendor/gdal-1.11.1/include:/app/vendor/geos-3.4.2/include"
+CPATH: "/app/vendor/gdal-1.11.1/include:/app/vendor/geos-3.4.2/include"
+GDAL_DATA: "/app/vendor/gdal-1.11.1/share/gdal"
+EOF
