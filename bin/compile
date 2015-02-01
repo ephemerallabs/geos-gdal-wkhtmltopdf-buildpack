@@ -61,8 +61,8 @@ export LD_LIBRARY_PATH=$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendo
 
 PROFILE_PATH="$BUILD_DIR/.profile.d/python.sh"
 
-echo "export PATH=$BIN_PATH" >> $PROFILE_PATH
-echo "export LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib" >> $PROFILE_PATH
-echo "export LD_LIBRARY_PATH=/app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib" >> $PROFILE_PATH
+echo "$BIN_PATH" > $ENV_DIR/PATH
+echo "/app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib" > $ENV_DIR/LIBRARY_PATH
+echo "/app/.heroku/vendor/lib:$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib" > $ENV_DIR/LD_LIBRARY_PATH
 
 exit 0
