@@ -3,8 +3,9 @@
 set -e
 
 BUILD_DIR=$1
-TMP_DIR=$BUILD_DIR/tmp
-VENDOR_DIR=$BUILD_DIR/vendor
+TMP_DIR="$BUILD_DIR/tmp"
+APP_DIR="/app"
+VENDOR_DIR="$app_DIR/vendor"
 
 CACHED_DIRS=".heroku"
 
@@ -15,9 +16,9 @@ GDAL_VERSION="1.11.1"
 GEOS_VERSION="3.4.2"
 WKHTMLTOPDF_VERSION="0.9.9"
 
-cd $TMP_DIR
 
 # Install GEOS
+cd $TMP_DIR
 echo "Fetching and installing GEOS ($GEOS_VERSION)"
 curl -O -s https://wapu-lib.s3.amazonaws.com/geos-$GEOS_VERSION-heroku.tar.gz
 echo "Installing ..."
@@ -29,6 +30,7 @@ echo "GEOS installed"
 
 
 # Install GDAL
+cd $TMP_DIR
 echo "Fetching and installing GDAL ($GDAL_VERSION)"
 curl -O -s https://wapu-lib.s3.amazonaws.com/gdal-$GDAL_VERSION-heroku.tar.gz
 echo "Installing ..."
@@ -39,6 +41,7 @@ rm gdal-$GDAL_VERSION-heroku.tar.gz
 echo "GDAL installed"
 
 # Install wkhtmltopdf
+cd $TMP_DIR
 echo "Fetching and installing wkhtmltopdf ($WKHTMLTOPDF_VERSION)"
 curl -O -s https://wapu-lib.s3.amazonaws.com/wkhtmltopdf-$WKHTMLTOPDF_VERSION-static-amd64.tar.gz
 echo "Installing ..."
@@ -51,12 +54,12 @@ echo "Wkhtmltopdf installed"
 
 echo "-----------> Configuring environment"
 
-export PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/bin:$BUILD_DIR/vendor/geos-$GEOS_VERSION/bin:$BUILD_DIR/vendor/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin:$PATH"
-export CPPPATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/include:$BUILD_DIR/vendor/geos-$GEOS_VERSION/include:$CPPPATH"
-export CPATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/include:$BUILD_DIR/vendor/geos-$GEOS_VERSION/include:$CPATH"
-export LIBRARY_PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LIBRARY_PATH"
-export LD_LIBRARY_PATH="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/lib:$BUILD_DIR/vendor/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH"
-export GDAL_DATA="$BUILD_DIR/vendor/gdal-$GDAL_VERSION/share/gdal"
+export PATH="$PATH:$VENDOR_DIR/gdal-$GDAL_VERSION/bin:$VENDOR_DIR/geos-$GEOS_VERSION/bin:$VENDOR_DIR/wkhtmltopdf-$WKHTMLTOPDF_VERSION/bin"
+export CPPPATH="$VENDOR_DIR/gdal-$GDAL_VERSION/include:$VENDOR_DIR/geos-$GEOS_VERSION/include:$CPPPATH"
+export CPATH="$VENDOR_DIR/gdal-$GDAL_VERSION/include:$VENDOR_DIR/geos-$GEOS_VERSION/include:$CPATH"
+export LIBRARY_PATH="$VENDOR_DIR/gdal-$GDAL_VERSION/lib:$VENDOR_DIR/geos-$GEOS_VERSION/lib:$LIBRARY_PATH"
+export LD_LIBRARY_PATH="$VENDOR_DIR/gdal-$GDAL_VERSION/lib:$VENDOR_DIR/geos-$GEOS_VERSION/lib:$LD_LIBRARY_PATH"
+export GDAL_DATA="$VENDOR_DIR/gdal-$GDAL_VERSION/share/gdal"
 
 echo $PATH
 
