@@ -1,6 +1,4 @@
-#!/bin/sh
-
-echo "-----------> Configuring environment"
+#!/usr/bin/env bash
 
 cat << EOF
 ---
